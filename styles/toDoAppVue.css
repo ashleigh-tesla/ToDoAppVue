@@ -9,7 +9,7 @@
 body {
     height: 100vh;
     width: 100%;
-    background: repeating-radial-gradient(red, yellow 10%, green 15%), #cccccc;
+    background: repeating-radial-gradient(red, yellow 5%, green 10%), #cccccc;
 }
 
 .wrapper {
@@ -121,4 +121,13 @@ body {
 .footer button.active {
     opacity: 1;
     pointer-events: auto;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 864px) {
+    body {
+        background: repeating-radial-gradient(red, yellow, green), #cccccc;
+    }
+    .wrapper {
+        background: linear-gradient(to bottom, #68eacc 0%, #497BE8 100%), #fff;
+    }
 }
