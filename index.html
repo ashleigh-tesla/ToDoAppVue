@@ -28,7 +28,7 @@
             <span>
             <a :disabled="myItem.length===0" :href="myItem"
                 class="link-dark"
-                style="font-size: 20px; color:  #000; float: right;" target="_blank">Search To Do</a>
+                style="font-size: 18px; font-weight: 700; color:  #000; float: right;" target="_blank">Search To Do</a>
         </span>
         </div>
         <div class="inputField">
@@ -42,12 +42,17 @@
                         <input v-model="thyItem" type="text" placeholder="Add Your New ToDo">
                     </div>
                     <div class="col-3">
-                        <button type="button" @click="saveItem">Add Task</button>
+                        <!-- <button type="button" @click="saveItem">Add Task</button> -->
+                        <!-- <button v-if="state==='default'" @click="changeState('edit')">Add Task</button>
+                        <button v-else="state==='edit'" @click="changeState('default')">Edit Task</button> -->
+                        <button class="btn btn-default btn-dark" type="button" @click="saveItem">Add Task</button>
+                        <!-- <button v-if="state==='default'" @click="changeState('edit')">Add Task</button>
+                        <button v-else="state==='edit'" @click="changeState('default')">Edit Task</button> -->
                     </div>
                 </div>
             </div>
             <div class="alert alert-warning alert-dismissible fade" role="alert" id="alert-box" style="display: none">
-                <strong>Opps!</strong> Field is empty or item exists. Please Try Again.
+                <strong>Opps!</strong> Field is empty or activity exists.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <div class="container-fluid">
@@ -103,7 +108,8 @@
                 }, {
                     label: 'cycling',
                     done: true,
-                }]
+                }],
+                // state: 'default',
             },
             computed: {
                 reversedItems() {
@@ -146,6 +152,24 @@
                 },
                 toggleDone: function(item) {
                     item.done = !item.done;
+                    deleteTask()
+                },
+                // changeState: function(newState) {
+                //     this.state = newState;
+                // },
+                deleteTask: function(index) {
+                    let getLocalStorage = localStorage.getItem("New ToDo") // getting local storage
+                    listArray = JSON.parse(getLocalStorage) // transforming json string into a js object
+                    listArray.splice(index, 1) // delete or remove the particular indexed li
+
+                    // after remove the li again update the local storage
+                    localStorage.setItem("New ToDo", JSON.stringify(listArray)) // transforming js object into a json string
+                    showTasks() // calling showTasks function
+                },
+                recount: function() {
+                    const myToDoList = document.querySelector('.myToDos')
+                    const count = myToDoList.querySelectorAll("input[type='checkbox']:checked").length
+                    document.querySelector("#pendingNum").textContent = `${count}`
                 }
             }
         })
