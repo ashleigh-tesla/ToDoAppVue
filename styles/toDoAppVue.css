@@ -123,6 +123,11 @@ body {
     pointer-events: auto;
 }
 
+.strikeout {
+    text-decoration: line-through;
+    color: grey;
+}
+
 @media only screen and (min-width: 0px) and (max-width: 864px) {
     body {
         background: repeating-radial-gradient(red, yellow, green), #cccccc;
