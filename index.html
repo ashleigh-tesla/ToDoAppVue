@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDoApp JavaScript | CodingTesla</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/toDoAppVue.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
@@ -21,9 +22,51 @@
 <body>
     <div class="wrapper">
         <header>ToDoApp</header>
+
+        <div id="to-do-list" style="display: flex; flex-direction: column;">
+            <input v-model="myItem" type="text">
+            <span>
+            <a :disabled="myItem.length===0" :href="myItem"
+                class="link-dark"
+                style="font-size: 20px; color:  #000; float: right;" target="_blank">Search To Do</a>
+        </span>
+        </div>
         <div class="inputField">
-            <input type="text" placeholder="Add Your New ToDo">
+            <input type="text" placeholder="Add Your ToDo">
             <button><i class="fas fa-plus">+</i></button>
+        </div>
+        <div id="myVueItem">
+            <div class="container-fluid">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-9">
+                        <input v-model="thyItem" type="text" placeholder="Add Your New ToDo">
+                    </div>
+                    <div class="col-3">
+                        <button type="button" @click="saveItem">Add Task</button>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-warning alert-dismissible fade" role="alert" id="alert-box" style="display: none">
+                <strong>Opps!</strong> Field is empty or item exists. Please Try Again.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <ul>
+                            <li v-for='item in reversedItems' :class="{strikeout : item.done}" @click="toggleDone(item)">
+                                {{item.label}}</li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <ol>
+                            <li v-for='item in sortedArray'>
+                                {{item.label}}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <p v-if="items.length===0">You bought all items</p>
         </div>
         <ul class="toDoList">
             <!-- Data Comes From Local Storage -->
@@ -36,5 +79,77 @@
 
 </body>
 <script src="scripts/toDoAppVue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<script>
+    {
+        let toDoList = new Vue({
+            el: '#to-do-list',
+            data: {
+                myItem: ''
+            }
+        });
+    } {
+        new Vue({
+            el: '#myVueItem',
+            data: {
+                thyItem: "",
+                items: [{
+                    label: 'coding',
+                    done: false,
+                }, {
+                    label: 'cycling',
+                    done: true,
+                }]
+            },
+            computed: {
+                reversedItems() {
+                    return this.items.slice(0).reverse();
+                },
+                sortedItems() {
+                    this.items.slice().sort(function(a, b) {
+                        return (a.label > b.label) ? 1 : -1;
+                    });
+                    return this.items;
+                },
+                sortedArray: function() {
+                    function compare(a, b) {
+                        if (a.label < b.label)
+                            return -1;
+                        if (a.label > b.label)
+                            return 1;
+                        return 0;
+                    }
+
+                    return this.items.sort(compare);
+                }
+            },
+            methods: {
+                saveItem: function() {
+
+                    if (!this.thyItem) {
+                        // input value is empty
+                        return
+                        $('#alert-box').addClass('show').removeAttr('style')
+                    } else {
+                        this.items.push({
+                            label: this.thyItem,
+                            done: false,
+                        })
+
+                        // clear the input 
+                        this.thyItem = null
+                    }
+                },
+                toggleDone: function(item) {
+                    item.done = !item.done;
+                }
+            }
+        })
+    }
+</script>
 
 </html>
