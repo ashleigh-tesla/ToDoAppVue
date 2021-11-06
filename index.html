@@ -72,7 +72,7 @@
                                         {{ todo.label }}
                                     </div>
                                     <div style="float: left; position: left; margin-right: 5px;">
-                                        <button class="btn btn-default btn-outline-warning" @click="editTodo(index, todo)">Edit</button>
+                                        <button class="btn btn-default btn-outline-warning" @click="editTodo(index)">Edit</button>
                                     </div>
                                     <div style="float: right; position: right; margin-left: 5px;">
                                         <button class="btn btn-default btn-danger" @click="deleteTodo(index, todo)">Delete</button>
@@ -168,9 +168,9 @@
                         this.todo = ''
                     } else return
                 },
-                editTodo(index, todo) {
-                    this.todo = todo
-                    this.selectedIndex = index
+                editTodo(index) {
+                    this.todo = this.todos[index].label;
+                    this.selectedIndex = index;
                     this.isEditing = true
                 },
                 updateTodo() {
