@@ -55,7 +55,7 @@
         </div>
         <div id="myVueItem">
             <div class="container-fluid">
-                <div class="row justify-content-between align-items-center" id="myVue">
+                <div class="row justify-content-around align-items-center" id="myVue">
                     <div class="col-10">
                         <div v-if="!isEditing">
                             <input type="text" v-model="todo" placeholder="Add Your New ToDo">
@@ -64,7 +64,7 @@
                             <input type="text" v-model="todo" placeholder="Add Your New ToDo">
                         </div>
                     </div>
-                    <div class="col-2 bttn">
+                    <div class="col-2">
                         <div v-if="!isEditing">
                             <button class="btn btn-default btn-dark" type="button" value="Add" @click="storeTodo">Add Task</button>
                         </div>
@@ -84,7 +84,7 @@
                 <div class="row justify-content-between align-items-center">
                     <div class="col-12 col-xxl-6">
                         <ul>
-                            <li v-for="(todo, index) in todos" :class="{finished : todo.finished}" style="margin: 5px 0;">
+                            <li v-for="(todo, index) in todos" :class="{finished : todo.finished}" style="margin: 5px 0; list-style:none;">
                                 <div style="display: flex; flex-direction:row; justify-content: space-evenly; width: 100%;">
                                     <div style="width: 70%;">
                                         {{ firstCharUpper(todo.label) }}
