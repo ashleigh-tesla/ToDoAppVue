@@ -16,6 +16,28 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        .pointer {
+            cursor: pointer;
+        }
+        
+        .pend {
+            color: red;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+        }
+        
+        .progrss {
+            color: orange;
+            font-family: cursive;
+            text-transform: uppercase;
+            text-decoration-style: solid;
+        }
+        
+        .finished {
+            color: olive;
+            text-decoration: underline overline line-through;
+            text-decoration-style: double;
+        }
     </style>
 </head>
 
@@ -33,7 +55,7 @@
         </div>
         <div id="myVueItem">
             <div class="container-fluid">
-                <div class="row justify-content-around align-items-center" id="myVue">
+                <div class="row justify-content-between align-items-center" id="myVue">
                     <div class="col-10">
                         <div v-if="!isEditing">
                             <input type="text" v-model="todo" placeholder="Add Your New ToDo">
@@ -42,12 +64,12 @@
                             <input type="text" v-model="todo" placeholder="Add Your New ToDo">
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-2 bttn">
                         <div v-if="!isEditing">
                             <button class="btn btn-default btn-dark" type="button" value="Add" @click="storeTodo">Add Task</button>
                         </div>
                         <div v-else>
-                            <button class="btn btn-default btn-dark" type="button" value="Update" @click="updateTodo">Edit Task</button>
+                            <button class="btn btn-default btn-dark" type="button" value="Update" @click="storeTodo">Edit Task</button>
                         </div>
                     </div>
                 </div>
@@ -61,34 +83,90 @@
             <div class="container-fluid">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-12 col-xxl-6">
-                        <!-- <ul>
-                            <li v-for='item in reversedItems' :class="{strikeout : item.done}" @click="toggleDone(item)">
-                                {{item.label}}</li>
-                        </ul> -->
                         <ul>
-                            <li v-for="(todo, index) in todos" :class="{strikeout : todo.done}" style="margin: 5px 0;">
+                            <li v-for="(todo, index) in todos" :class="{finished : todo.finished}" style="margin: 5px 0;">
                                 <div style="display: flex; flex-direction:row; justify-content: space-evenly; width: 100%;">
                                     <div style="width: 70%;">
-                                        {{ todo.label }}
+                                        {{ firstCharUpper(todo.label) }}
                                     </div>
                                     <div style="float: left; position: left; margin-right: 5px;">
                                         <button class="btn btn-default btn-outline-warning" @click="editTodo(index)">Edit</button>
                                     </div>
                                     <div style="float: right; position: right; margin-left: 5px;">
-                                        <button class="btn btn-default btn-danger" @click="deleteTodo(index, todo)">Delete</button>
+                                        <button class="btn btn-default btn-danger" @click="deleteTodo(index)">Delete</button>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-12 col-xxl-6">
+                </div>
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-md-6">
                         <ol>
                             <li v-for='todo in sortedArray'>
-                                {{todo.label}}</li>
+                                {{firstCharUpper(todo.label)}}</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-6">
+                        <ol>
+                            <li v-for='todo in reversedItems'>
+                                {{firstCharUpper(todo.label)}}</li>
                         </ol>
                     </div>
                 </div>
             </div>
+
+
+
+
+
+            <!-- Todo Table -->
+            <div class="table-responsive">
+                <table class="table table-success table-striped table-bordered border-dark mt-5">
+                    <thead>
+                        <tr>
+                            <th scope="col">To-Do</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-center">Edit</th>
+                            <th scope="col" class="text-center">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(todo, index) in todos" :key="index">
+                            <td>
+                                <span :class="{ progrss: todo.status === 'in-progress', pend: todo.status === 'to-do', finished: todo.status === 'finished' }">{{
+                    firstCharUpper(todo.label)
+                }}</span>
+                            </td>
+                            <td style="max-width: 120px">
+                                <span @click="changeStatus(index)" class="pointer" :class="{
+                    'text-danger': todo.status === 'to-do',
+                    'text-warning': todo.status === 'in-progress',
+                    'text-success': todo.status === 'finished',
+                    }">
+                    {{ firstCharUpper(todo.status) }}
+                </span>
+                            </td>
+                            <td style="max-width: 50px">
+                                <div class="text-center text-warning" @click="editTodo(index)">
+                                    <span class="fa fa-pencil-alt"></span>
+                                </div>
+                            </td>
+                            <td style="max-width: 50px">
+                                <div class="text-center text-danger" @click="deleteTodo(index)">
+                                    <span class="fa fa-trash"></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+
+
+
         </div>
         <div class="inputField">
             <input type="text" placeholder="Add Your ToDo">
@@ -121,20 +199,23 @@
     } {
         new Vue({
             el: '#myVueItem',
-            data: {
-                isEditing: false,
-                selectedIndex: null,
-                todo: '',
-                todos: [{
-                    label: 'Marketing',
-                    done: false,
-                }, {
-                    label: 'Cycling',
-                    done: true,
-                }, {
-                    label: 'Banking',
-                    done: true,
-                }]
+            data() {
+                return {
+                    isEditing: false,
+                    availableStatuses: ["to-do", "in-progress", "finished"],
+                    selectedIndex: null,
+                    todo: '',
+                    todos: [{
+                        label: 'Marketing',
+                        status: "to-do",
+                    }, {
+                        label: 'Cycling',
+                        status: "in-progress",
+                    }, {
+                        label: 'Banking',
+                        status: "finished",
+                    }]
+                }
             },
             computed: {
                 reversedItems() {
@@ -163,23 +244,38 @@
             },
             methods: {
                 storeTodo() {
-                    if (this.todo != '') {
-                        this.todos.push(this.todo)
-                        this.todo = ''
-                    } else return
+                    if (this.todo.length === 0) return;
+                    if (this.selectedIndex == null) {
+                        this.todos.push({
+                            label: this.todo,
+                            status: "to-do",
+                        });
+                    } else {
+                        this.todos[this.selectedIndex].label = this.todo;
+                        this.selectedIndex = null;
+                    }
+                    this.todo = "";
                 },
                 editTodo(index) {
+                    this.isEditing = true
                     this.todo = this.todos[index].label;
                     this.selectedIndex = index;
-                    this.isEditing = true
                 },
                 updateTodo() {
                     this.todos.splice(this.selectedIndex, 1, this.todo)
                     this.isEditing = false
                     this.todo = ''
                 },
+                changeStatus(index) {
+                    let newIndex = this.availableStatuses.indexOf(this.todos[index].status);
+                    if (++newIndex > 2) newIndex = 0;
+                    this.todos[index].status = this.availableStatuses[newIndex];
+                },
+                firstCharUpper(str) {
+                    return str.charAt(0).toUpperCase() + str.slice(1);
+                },
                 deleteTodo(index) {
-                    this.todos.splice(index, 1)
+                    this.todos.splice(index, 1);
                 }
             }
         })
