@@ -157,16 +157,15 @@ body {
     pointer-events: auto;
 }
 
-.strikeout {
-    text-decoration: line-through;
-    color: grey;
-}
-
 @media only screen and (min-width: 0px) and (max-width: 864px) {
     body {
         background: repeating-radial-gradient(red, yellow, green), #cccccc;
     }
     .wrapper {
         background: linear-gradient(to bottom, #68eacc 0%, #497BE8 100%), #fff;
+        margin: 60px auto;
+        max-width: 360px;
+        width: 100%;
+        border-radius: 5px;
     }
 }
