@@ -66,7 +66,8 @@
                     </div>
                     <div class="col-2">
                         <div v-if="!isEditing">
-                            <button class="btn btn-default btn-dark" type="button" value="Add" @click="storeTodo">Add Task</button>
+                            <button class="btn btn-default btn-dark" type="button" value="Add" @click="storeTodo">Add
+                                Task</button>
                         </div>
                         <div v-else>
                             <button class="btn btn-default btn-dark" type="button" value="Update" @click="storeTodo">Edit Task</button>
@@ -135,8 +136,8 @@
                         <tr v-for="(todo, index) in todos" :key="index">
                             <td>
                                 <span :class="{ progrss: todo.status === 'in-progress', pend: todo.status === 'to-do', finished: todo.status === 'finished' }">{{
-                    firstCharUpper(todo.label)
-                }}</span>
+                                    firstCharUpper(todo.label)
+                                    }}</span>
                             </td>
                             <td style="max-width: 120px">
                                 <span @click="changeStatus(index)" class="pointer" :class="{
@@ -144,8 +145,8 @@
                     'text-warning': todo.status === 'in-progress',
                     'text-success': todo.status === 'finished',
                     }">
-                    {{ firstCharUpper(todo.status) }}
-                </span>
+                                    {{ firstCharUpper(todo.status) }}
+                                </span>
                             </td>
                             <td style="max-width: 50px">
                                 <div class="text-center text-warning" @click="editTodo(index)">
