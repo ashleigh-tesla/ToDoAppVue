@@ -250,6 +250,20 @@
 
                     return this.todos.sort(compare);
                 },
+                sortedByPriority() {
+                    // const order = ['to-do', 'ongoing', 'finished']
+                    // return this.todos.sort((x, y) => order.indexOf(x.this.status) - order.indexOf(y.this.status))
+
+
+                    // const order = ['to-do', 'ongoing', 'finished'];
+                    // const map = new Map();
+                    // order.forEach((x, i) => map.set(x, i));
+                    // this.todos.sort((x, y) => map.get(x.this.status) - map.get(y.this.status));
+                    // return this.todos.sort((x, y) => map.get(x.this.status) - map.get(y.this.status));
+                    // console.log(this.todos);
+                    // return this.todos;
+
+                },
                 isEmpty: ({
                     todos
                 }) => todos.length === 0
