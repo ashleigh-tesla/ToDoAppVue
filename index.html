@@ -279,7 +279,7 @@
                     inProgress.textContent = ` ${ongoingNumber} `
                 },
                 storeTodo() {
-                    if (this.todo.length === 0 || this.todos.includes(this.todo)) {
+                    if (this.todo.length === 0 || this.todos.includes(this.todo)) return; {
                         $('#alert-box').addClass('show').removeAttr('style')
                     }
                     if (this.selectedIndex == null) {
