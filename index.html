@@ -71,115 +71,125 @@
                         </div>
                     </div>
                 </div>
-                <div class="container-fluid">
-                    <div class="alert alert-warning alert-dismissible fade" role="alert" id="alert-box" style="display: none">
-                        <strong>Opps!</strong> Field is empty or activity exists.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+            </div>
+            <div class="container-fluid">
+                <div class="alert alert-warning alert-dismissible fade" role="alert" id="alert-box" style="display: none">
+                    <strong>Opps!</strong> Field is empty or activity exists.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-                <div class="container-fluid">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-12 col-xxl-6">
-                            <ul>
-                                <li v-for="(todo, index) in todos" :class="{finished : todo.finished}" style="margin: 5px 0; list-style:none;">
-                                    <div style="display: flex; flex-direction:row; justify-content: space-evenly; width: 100%;">
-                                        <div style="width: 70%;">
-                                            {{ firstCharUpper(todo.label) }}
-                                        </div>
-                                        <div style="float: left; position: left; margin-right: 5px;">
-                                            <button class="btn btn-default btn-outline-warning" @click="editTodo(index)">Edit</button>
-                                        </div>
-                                        <div style="float: right; position: right; margin-left: 5px;">
-                                            <button class="btn btn-default btn-danger" @click="deleteTodo(index)">Delete</button>
-                                        </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-12 col-xxl-6">
+                        <ul>
+                            <li v-for="(todo, index) in todos" :class="{finished : todo.finished}" style="margin: 5px 0; list-style:none;">
+                                <div style="display: flex; flex-direction:row; justify-content: space-evenly; width: 100%;">
+                                    <div style="width: 70%;">
+                                        {{ firstCharUpper(todo.label) }}
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-md-6">
-                            <ol>
-                                <li v-for='todo in sortedArray'>
-                                    {{firstCharUpper(todo.label)}}</li>
-                            </ol>
-                        </div>
-                        <div class="col-md-6">
-                            <ol>
-                                <li v-for='todo in reversedItems'>
-                                    {{firstCharUpper(todo.label)}}</li>
-                            </ol>
-                        </div>
+                                    <div style="float: left; position: left; margin-right: 5px;">
+                                        <button class="btn btn-default btn-outline-warning" @click="editTodo(index)">Edit</button>
+                                    </div>
+                                    <div style="float: right; position: right; margin-left: 5px;">
+                                        <button class="btn btn-default btn-danger" @click="deleteTodo(index)">Delete</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-md-6">
+                        <ol>
+                            <li v-for='todo in sortedArray'>
+                                {{firstCharUpper(todo.label)}}</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-6">
+                        <ol>
+                            <li v-for='todo in reversedItems'>
+                                {{firstCharUpper(todo.label)}}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
 
 
 
 
 
-                <!-- Todo Table -->
-                <div class="table-responsive">
-                    <table class="table table-success table-striped table-bordered border-dark mt-5">
-                        <thead>
-                            <tr>
-                                <th scope="col">To-Do</th>
-                                <th scope="col">Status</th>
-                                <th scope="col" class="text-center">Edit</th>
-                                <th scope="col" class="text-center">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(todo, index) in todos" :key="index">
-                                <td>
-                                    <span :class="{ progrss: todo.status === 'ongoing', pend: todo.status === 'to-do', finished: todo.status === 'finished' }">{{
+            <!-- Todo Table -->
+            <div class="table-responsive">
+                <table class="table table-success table-striped table-bordered border-dark mt-5">
+                    <thead>
+                        <tr>
+                            <th scope="col">To-Do</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-center">Edit</th>
+                            <th scope="col" class="text-center">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(todo, index) in todos" :key="index">
+                            <td>
+                                <span :class="{ progrss: todo.status === 'ongoing', pend: todo.status === 'to-do', finished: todo.status === 'finished' }">{{
                                     firstCharUpper(todo.label)
                                     }}</span>
-                                </td>
-                                <td style="width: 120px">
-                                    <span @click="changeStatus(index)" class="pointer" :class="{
+                            </td>
+                            <td style="width: 120px">
+                                <span @click="changeStatus(index)" class="pointer" :class="{
                     'text-danger': todo.status === 'to-do',
                     'text-warning': todo.status === 'ongoing',
                     'text-success': todo.status === 'finished',
                     }">
                                     {{ firstCharUpper(todo.status) }}
                                 </span>
-                                </td>
-                                <td style="max-width: 50px">
-                                    <div class="text-center text-warning" @click="editTodo(index)">
-                                        <span class="fa fa-pencil-alt"></span>
-                                    </div>
-                                </td>
-                                <td style="max-width: 50px">
-                                    <div class="text-center text-danger" @click="deleteTodo(index)">
-                                        <span class="fa fa-trash"></span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            </td>
+                            <td style="max-width: 50px">
+                                <div class="text-center text-warning" @click="editTodo(index)">
+                                    <span class="fa fa-pencil-alt"></span>
+                                </div>
+                            </td>
+                            <td style="max-width: 50px">
+                                <div class="text-center text-danger" @click="deleteTodo(index)">
+                                    <span class="fa fa-trash"></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="container-fluid">
+                <div class="input-group mb-3">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-9">
+                            <span class="input-group-text">You Have  <span class="ongoingNum"> </span> Pending Tasks</span>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-outline-dark" type="button" id="clearThyToDo" @click="clearThyToDo()">Erase All</button>
+                        </div>
+                    </div>
                 </div>
-
-
-
-
-
-
             </div>
-            <br>
-            <hr>
-            <br>
-            <div class="inputField">
-                <input type="text" placeholder="Add Your ToDo">
-                <button><i class="fas fa-plus"></i></button>
-            </div>
-            <ul class="toDoList">
-                <!-- Data Comes From Local Storage -->
-            </ul>
-            <div class="footer">
-                <span>You Have <span class="pendingNum"></span> Pending Tasks</span>
-                <button>Clear All</button>
-            </div>
+
         </div>
+
+
+        <br>
+        <hr>
+        <br>
+        <div class="inputField">
+            <input type="text" placeholder="Add Your ToDo">
+            <button><i class="fas fa-plus"></i></button>
+        </div>
+        <ul class="toDoList">
+            <!-- Data Comes From Local Storage -->
+        </ul>
+        <div class="footer">
+            <span>You Have <span class="pendingNum"></span> Pending Tasks</span>
+            <button>Clear All</button>
+        </div>
+    </div>
 
 </body>
 <script src="scripts/toDoAppVue.js"></script>
@@ -243,6 +253,10 @@
                 }) => todos.length === 0
             },
             methods: {
+                recount() {
+                    const ongoingNumber = document.querySelector(".ongoingNum")
+                    ongoingNumber.textContent = this.todos.length // passing the length value in ongoingNum
+                },
                 storeTodo() {
                     if (this.todo.length === 0) return;
                     if (this.selectedIndex == null) {
@@ -255,27 +269,36 @@
                         this.selectedIndex = null;
                     }
                     this.todo = "";
+                    this.recount()
                 },
                 editTodo(index) {
                     this.isEditing = true
                     this.todo = this.todos[index].label;
                     this.selectedIndex = index;
+                    this.recount()
                 },
                 updateTodo() {
                     this.todos.splice(this.selectedIndex, 1, this.todo)
                     this.isEditing = false
                     this.todo = ''
+                    this.recount()
                 },
                 changeStatus(index) {
                     let newIndex = this.availableStatuses.indexOf(this.todos[index].status);
                     if (++newIndex > 2) newIndex = 0;
                     this.todos[index].status = this.availableStatuses[newIndex];
+                    this.recount()
                 },
                 firstCharUpper(str) {
                     return str.charAt(0).toUpperCase() + str.slice(1);
                 },
                 deleteTodo(index) {
                     this.todos.splice(index, 1);
+                    this.recount()
+                },
+                clearThyToDo() {
+                    this.todos = []; //empty array
+                    this.storeTodo()
                 }
             }
         })
