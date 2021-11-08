@@ -45,141 +45,141 @@
     <div class="wrapper">
         <header>ToDoApp</header>
 
-        <div id="to-do-url">
-            <input v-model="myItem" type="text">
-            <span>
+        <div id="to-do-url" style="display: flex; justify-content:center; align-items:center; width: 100%;">
+            <input v-model="myItem" type="text" placeholder="paste your to-do url" style="padding: 10px 10px; border-radius: 3px; outline: none; width: 75%; font-size: 17px; height: 100%; border: 1px solid #ccc; margin-right: 5px;">
+            <span style="width: 20%; margin-left: 10px;">
                 <a :disabled="myItem.length===0" :href="myItem" class="link-dark"
                     style="font-size: 18px; font-weight: 700; color:  #000; float: right;" target="_blank">Search To
                     Do</a>
             </span>
         </div>
+        <br>
+        <hr>
+        </br>
         <div id="myVueItem">
             <div class="container-fluid">
-                <div class="row justify-content-around align-items-center" id="myVue">
-                    <div class="col-10">
-                        <div v-if="!isEditing">
-                            <input type="text" v-model="todo" placeholder="Add Your New ToDo">
+                <div class="row justify-content-between align-items-center" id="myVue">
+
+                    <div class="input-group">
+                        <div class="col-10">
+                            <input type="text" v-if="!isEditing" class="form-control form-control-lg" v-model="todo" placeholder="Add Your To Do" aria-label=".form-control-lg example">
+                            <input type="text" v-else class="form-control form-control-lg" v-model="todo" placeholder="Edit Your To Do" aria-label=".form-control example">
                         </div>
-                        <div v-else>
-                            <input type="text" v-model="todo" placeholder="Add Your New ToDo">
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div v-if="!isEditing">
-                            <button class="btn btn-default btn-dark" type="button" value="Add" @click="storeTodo">Add Task</button>
-                        </div>
-                        <div v-else>
-                            <button class="btn btn-default btn-dark" type="button" value="Update" @click="storeTodo">Edit Task</button>
+                        <div class="col-2">
+                            <button v-if="!isEditing" class="btn btn-outline-light" type="button" @click="storeTodo">Add</button>
+                            <button v-else class="btn btn-outline-dark" type="button" @click="storeTodo">Edit</button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="container-fluid">
-                <div class="alert alert-warning alert-dismissible fade" role="alert" id="alert-box" style="display: none">
-                    <strong>Opps!</strong> Field is empty or activity exists.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="container-fluid">
+                    <div class="alert alert-warning alert-dismissible fade" role="alert" id="alert-box" style="display: none">
+                        <strong>Opps!</strong> Field is empty or activity exists.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 </div>
-            </div>
-            <div class="container-fluid">
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-12 col-xxl-6">
-                        <ul>
-                            <li v-for="(todo, index) in todos" :class="{finished : todo.finished}" style="margin: 5px 0; list-style:none;">
-                                <div style="display: flex; flex-direction:row; justify-content: space-evenly; width: 100%;">
-                                    <div style="width: 70%;">
-                                        {{ firstCharUpper(todo.label) }}
+                <div class="container-fluid">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-12 col-xxl-6">
+                            <ul>
+                                <li v-for="(todo, index) in todos" :class="{finished : todo.finished}" style="margin: 5px 0; list-style:none;">
+                                    <div style="display: flex; flex-direction:row; justify-content: space-evenly; width: 100%;">
+                                        <div style="width: 70%;">
+                                            {{ firstCharUpper(todo.label) }}
+                                        </div>
+                                        <div style="float: left; position: left; margin-right: 5px;">
+                                            <button class="btn btn-default btn-outline-warning" @click="editTodo(index)">Edit</button>
+                                        </div>
+                                        <div style="float: right; position: right; margin-left: 5px;">
+                                            <button class="btn btn-default btn-danger" @click="deleteTodo(index)">Delete</button>
+                                        </div>
                                     </div>
-                                    <div style="float: left; position: left; margin-right: 5px;">
-                                        <button class="btn btn-default btn-outline-warning" @click="editTodo(index)">Edit</button>
-                                    </div>
-                                    <div style="float: right; position: right; margin-left: 5px;">
-                                        <button class="btn btn-default btn-danger" @click="deleteTodo(index)">Delete</button>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-md-6">
+                            <ol>
+                                <li v-for='todo in sortedArray'>
+                                    {{firstCharUpper(todo.label)}}</li>
+                            </ol>
+                        </div>
+                        <div class="col-md-6">
+                            <ol>
+                                <li v-for='todo in reversedItems'>
+                                    {{firstCharUpper(todo.label)}}</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-md-6">
-                        <ol>
-                            <li v-for='todo in sortedArray'>
-                                {{firstCharUpper(todo.label)}}</li>
-                        </ol>
-                    </div>
-                    <div class="col-md-6">
-                        <ol>
-                            <li v-for='todo in reversedItems'>
-                                {{firstCharUpper(todo.label)}}</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
 
 
 
 
 
-            <!-- Todo Table -->
-            <div class="table-responsive">
-                <table class="table table-success table-striped table-bordered border-dark mt-5">
-                    <thead>
-                        <tr>
-                            <th scope="col">To-Do</th>
-                            <th scope="col">Status</th>
-                            <th scope="col" class="text-center">Edit</th>
-                            <th scope="col" class="text-center">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(todo, index) in todos" :key="index">
-                            <td>
-                                <span :class="{ progrss: todo.status === 'in-progress', pend: todo.status === 'to-do', finished: todo.status === 'finished' }">{{
-                    firstCharUpper(todo.label)
-                }}</span>
-                            </td>
-                            <td style="max-width: 120px">
-                                <span @click="changeStatus(index)" class="pointer" :class="{
+                <!-- Todo Table -->
+                <div class="table-responsive">
+                    <table class="table table-success table-striped table-bordered border-dark mt-5">
+                        <thead>
+                            <tr>
+                                <th scope="col">To-Do</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" class="text-center">Edit</th>
+                                <th scope="col" class="text-center">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(todo, index) in todos" :key="index">
+                                <td>
+                                    <span :class="{ progrss: todo.status === 'ongoing', pend: todo.status === 'to-do', finished: todo.status === 'finished' }">{{
+                                    firstCharUpper(todo.label)
+                                    }}</span>
+                                </td>
+                                <td style="width: 120px">
+                                    <span @click="changeStatus(index)" class="pointer" :class="{
                     'text-danger': todo.status === 'to-do',
-                    'text-warning': todo.status === 'in-progress',
+                    'text-warning': todo.status === 'ongoing',
                     'text-success': todo.status === 'finished',
                     }">
-                    {{ firstCharUpper(todo.status) }}
-                </span>
-                            </td>
-                            <td style="max-width: 50px">
-                                <div class="text-center text-warning" @click="editTodo(index)">
-                                    <span class="fa fa-pencil-alt"></span>
-                                </div>
-                            </td>
-                            <td style="max-width: 50px">
-                                <div class="text-center text-danger" @click="deleteTodo(index)">
-                                    <span class="fa fa-trash"></span>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                    {{ firstCharUpper(todo.status) }}
+                                </span>
+                                </td>
+                                <td style="max-width: 50px">
+                                    <div class="text-center text-warning" @click="editTodo(index)">
+                                        <span class="fa fa-pencil-alt"></span>
+                                    </div>
+                                </td>
+                                <td style="max-width: 50px">
+                                    <div class="text-center text-danger" @click="deleteTodo(index)">
+                                        <span class="fa fa-trash"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+
+
             </div>
-
-
-
-
-
-
+            <br>
+            <hr>
+            <br>
+            <div class="inputField">
+                <input type="text" placeholder="Add Your ToDo">
+                <button><i class="fas fa-plus"></i></button>
+            </div>
+            <ul class="toDoList">
+                <!-- Data Comes From Local Storage -->
+            </ul>
+            <div class="footer">
+                <span>You Have <span class="pendingNum"></span> Pending Tasks</span>
+                <button>Clear All</button>
+            </div>
         </div>
-        <div class="inputField">
-            <input type="text" placeholder="Add Your ToDo">
-            <button><i class="fas fa-plus"></i></button>
-        </div>
-        <ul class="toDoList">
-            <!-- Data Comes From Local Storage -->
-        </ul>
-        <div class="footer">
-            <span>You Have <span class="pendingNum"></span> Pending Tasks</span>
-            <button>Clear All</button>
-        </div>
-    </div>
 
 </body>
 <script src="scripts/toDoAppVue.js"></script>
@@ -202,7 +202,7 @@
             data() {
                 return {
                     isEditing: false,
-                    availableStatuses: ["to-do", "in-progress", "finished"],
+                    availableStatuses: ["to-do", "ongoing", "finished"],
                     selectedIndex: null,
                     todo: '',
                     todos: [{
@@ -210,7 +210,7 @@
                         status: "to-do",
                     }, {
                         label: 'Cycling',
-                        status: "in-progress",
+                        status: "ongoing",
                     }, {
                         label: 'Banking',
                         status: "finished",
