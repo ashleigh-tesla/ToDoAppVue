@@ -279,11 +279,14 @@
                 },
                 storeTodo() {
                     let getSessionStorage = sessionStorage.getItem("ToDoArray") // getting session storage
-                    if (this.todo.length === 0 || this.todos.includes(this.todo)) return; {
+                    if (this.todo.length === 0 || this.todos.includes(this.todo)) {
                         $('#alert-box').addClass('show').removeAttr('style')
-                    }
 
-                    if (getSessionStorage.length == 3) { // if session storage contains already there 3 elements
+                        // window.location.reload()
+
+                        return
+                    }
+                    if (getSessionStorage == null) { // if session storage contains already there 3 elements
                         this.todos = this.todos // creating an array of those elements
                     } else {
                         this.todos = JSON.parse(getSessionStorage) // transforming json string into a js object
