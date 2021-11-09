@@ -278,14 +278,22 @@
                     inProgress.textContent = ` ${ongoingNumber} `
                 },
                 storeTodo() {
+                    let getSessionStorage = sessionStorage.getItem("ToDoArray") // getting session storage
                     if (this.todo.length === 0 || this.todos.includes(this.todo)) return; {
                         $('#alert-box').addClass('show').removeAttr('style')
+                    }
+
+                    if (getSessionStorage.length == 3) { // if session storage contains already there 3 elements
+                        this.todos = this.todos // creating an array of those elements
+                    } else {
+                        this.todos = JSON.parse(getSessionStorage) // transforming json string into a js object
                     }
                     if (this.selectedIndex == null) {
                         this.todos.push({
                             label: this.todo,
                             status: "to-do",
                         });
+                        sessionStorage.setItem("ToDoArray", JSON.stringify(this.todos)) // transforming js object into a json string
                     } else {
                         this.todos[this.selectedIndex].label = this.todo;
                         this.selectedIndex = null;
@@ -315,13 +323,18 @@
                     return str.charAt(0).toUpperCase() + str.slice(1);
                 },
                 deleteTodo(index) {
+                    let getSessionStorage = sessionStorage.getItem("ToDoArray") // getting session storage
+                    this.todos = JSON.parse(getSessionStorage) // transforming json string into a js object
                     this.todos.splice(index, 1);
+                    sessionStorage.setItem("ToDoArray", JSON.stringify(this.todos)) // transforming js object into a json string
                     this.recount()
+                    this.storeTodo()
                 },
                 clearThyToDo() {
                     this.todos = []; //empty array
                     this.storeTodo()
                     this.recount()
+                    sessionStorage.setItem("ToDoArray", JSON.stringify(this.todos)) // transforming js object into a json string
                 }
             }
         })
