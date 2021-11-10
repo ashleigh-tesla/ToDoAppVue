@@ -46,12 +46,20 @@
         <header>ToDoApp</header>
 
         <div id="to-do-url" style="display: flex; justify-content:center; align-items:center; width: 100%;">
-            <input v-model="myItem" type="text" placeholder="paste your to-do url" style="padding: 10px 10px; border-radius: 3px; outline: none; width: 75%; font-size: 17px; height: 100%; border: 1px solid #ccc; margin-right: 5px;">
-            <span style="width: 20%; margin-left: 10px;">
-                <a :disabled="myItem.length===0" :href="myItem" class="link-dark"
-                    style="font-size: 18px; font-weight: 700; color:  #000; float: right;" target="_blank">Search To
-                    Do</a>
-            </span>
+            <div class="container-fluid">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-12 col-sm-9 align-self-start">
+                        <input v-model="myItem" class="form-control form-control url-input" type="text" placeholder="paste your to-do url" aria-label=".form-control input">
+                    </div>
+                    <div class="col-12 col-sm-3 align-self-end">
+                        <span class="url-span">
+                            <a type="button" :disabled="myItem.length===0" :href="myItem" class="btn btn-link link-dark"
+                                style="font-size: 18px; font-weight: 700; color:  #000; float: right;" target="_blank">Search To
+                                Do</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
         <br>
         <hr>
@@ -59,45 +67,42 @@
         <div id="myVueItem">
             <div class="container-fluid">
                 <div class="row justify-content-between align-items-center" id="myVue">
-
-                    <div class="input-group">
-                        <div class="col-10">
-                            <input type="text" v-if="!isEditing" class="form-control form-control-lg" v-model="todo" placeholder="Add Your To Do" aria-label=".form-control-lg example">
-                            <input type="text" v-else class="form-control form-control-lg" v-model="todo" placeholder="Edit Your To Do" aria-label=".form-control example">
-                        </div>
-                        <div class="col-2">
-                            <button v-if="!isEditing" class="btn btn-outline-light" type="button" @click="storeTodo">Add</button>
-                            <button v-else class="btn btn-outline-dark" type="button" @click="storeTodo">Edit</button>
-                        </div>
+                    <div class="col-9">
+                        <input type="text" v-if="!isEditing" class="form-control form-control" v-model="todo" placeholder="Add Your To Do" aria-label=".form-control input1">
+                        <input type="text" v-else class="form-control form-control" v-model="todo" placeholder="Edit Your To Do" aria-label=".form-control input2">
+                    </div>
+                    <div class="col-3">
+                        <button v-if="!isEditing" class="btn btn-outline-light p-2 btn-lg" type="button" @click="storeTodo">Add</button>
+                        <button v-else class="btn btn-outline-dark p-2 btn-lg" type="button" @click="storeTodo">Edit</button>
                     </div>
                 </div>
             </div>
-            <div class="container-fluid">
-                <div class="alert alert-warning alert-dismissible fade" role="alert" id="alert-box" style="display: none">
-                    <strong>Opps!</strong> Field is empty or activity exists.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="container-fluid my-3">
+                <div class="row">
+                    <div class="alert alert-warning alert-dismissible fade" role="alert" id="alert-box" style="display: none">
+                        <strong>Opps!</strong> Field is empty or activity exists.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 </div>
             </div>
-            <div class="container-fluid">
-                <div class="">
-                    <li v-for="(todo, index) in todos" :class="{finished : todo.finished}" style="list-style:none; margin: 10px 0;">
-                        <div class="container-fluid">
-                            <div class="row justify-content-evenly align-items-center" style="display: flex; flex-direction: row; justify-content:space-evenly; align-items: center; width: 100%;">
-                                <div class="col-10 col-md-6" style="width: 50%;">
-                                    {{ firstCharUpper(todo.label) }}
-                                </div>
-                                <div class="col-2 col-md-1 p-2" style="width: 5%; margin: 0 4px;">
-                                    <input type="checkbox" class="form-check-input" @change="recount()">
-                                </div>
-                                <div class="col-6 col-md-2 p-2 mx-md-2" style="width: 12%; margin: 0 4px;">
-                                    <button class="btn btn-default btn-outline-warning" @click="editTodo(index)">Edit</button>
-                                </div>
-                                <div class="col-6 col-md-3 p-2 mx-md-2" style="width: 15%;">
-                                    <button class="btn btn-default btn-danger" @click="deleteTodo(index)">Delete</button>
-                                </div>
+            <div class="container-fluid my-5">
+                <div v-for="(todo, index) in todos" :class="{finished : todo.finished}" class="my-4 my-md-2">
+                    <div class="container-fluid">
+                        <div class="row justify-content-evenly align-items-center">
+                            <div class="col-6 col-sm-6">
+                                {{ firstCharUpper(todo.label) }}
+                            </div>
+                            <div class="col-6 col-sm-1">
+                                <input type="checkbox" class="form-check-input" @change="recount()">
+                            </div>
+                            <div class="col-6 col-sm-2">
+                                <button class="btn btn-default btn-outline-warning" @click="editTodo(index)">Edit</button>
+                            </div>
+                            <div class="col-6 col-sm-3">
+                                <button class="btn btn-default btn-danger" @click="deleteTodo(index)">Delete</button>
                             </div>
                         </div>
-                    </li>
+                    </div>
                 </div>
                 <div class="row justify-content-between align-items-center">
                     <div class="col-md-6">
@@ -161,14 +166,13 @@
                 </table>
             </div>
 
-            <div class="container-fluid">
-                <div class="input-group mb-3">
+            <div class="container-fluid clearfix">
+                <div class="mb-3">
                     <div class="row justify-content-between align-items-center">
-                        <div class="col-9">
-                            <span class="input-group-text">You Have Completed <span class="ongoingNum"
-                                    style="color:darkviolet; margin: 0 5px;">?</span> Tasks</span>
+                        <div class="col-12 col-md-9">
+                            <p class="input-group-text clearfix text-wrap fw-bolder">You Have Completed <span class="ongoingNum" style="color:darkviolet; margin: 0 5px;">?</span> Tasks</p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-12 col-md-3">
                             <button class="btn btn-outline-dark" type="button" id="clearThyToDo" @click="clearThyToDo()">Erase All</button>
                         </div>
                     </div>
@@ -233,6 +237,15 @@
                     }]
                 }
             },
+            mounted() {
+                if (sessionStorage.getItem('ToDoArray')) {
+                    try {
+                        this.todos = JSON.parse(sessionStorage.getItem('ToDoArray'));
+                    } catch (e) {
+                        sessionStorage.removeItem('ToDoArray');
+                    }
+                }
+            },
             computed: {
                 reversedItems() {
                     return this.todos.slice(0).reverse();
@@ -266,7 +279,6 @@
                     // return this.todos.sort((x, y) => map.get(x.this.status) - map.get(y.this.status));
                     // console.log(this.todos);
                     // return this.todos;
-
                 },
                 isEmpty: ({
                     todos
@@ -279,8 +291,13 @@
                     inProgress.textContent = ` ${ongoingNumber} `
                 },
                 storeTodo() {
-                    if (this.todo.length === 0 || this.todos.includes(this.todo)) return; {
+                    // ensure they actually typed something
+                    if (this.todo.length === 0 || !this.todo && this.todos.includes(this.todo)) {
                         $('#alert-box').addClass('show').removeAttr('style')
+
+                        // window.location.reload()
+
+                        return
                     }
                     if (this.selectedIndex == null) {
                         this.todos.push({
@@ -290,27 +307,37 @@
                     } else {
                         this.todos[this.selectedIndex].label = this.todo;
                         this.selectedIndex = null;
+                        window.location.reload()
+
                     }
                     this.todo = "";
                     this.recount()
+                    this.saveTodo()
+                },
+                saveTodo() {
+                    const parsed = JSON.stringify(this.todos);
+                    sessionStorage.setItem('ToDoArray', parsed);
                 },
                 editTodo(index) {
                     this.isEditing = true
                     this.todo = this.todos[index].label;
                     this.selectedIndex = index;
                     this.recount()
+                    this.saveTodo()
                 },
                 updateTodo() {
                     this.todos.splice(this.selectedIndex, 1, this.todo)
                     this.isEditing = false
                     this.todo = ''
                     this.recount()
+                    this.saveTodo()
                 },
                 changeStatus(index) {
                     let newIndex = this.availableStatuses.indexOf(this.todos[index].status);
                     if (++newIndex > 2) newIndex = 0;
                     this.todos[index].status = this.availableStatuses[newIndex];
                     this.recount()
+                    this.saveTodo()
                 },
                 firstCharUpper(str) {
                     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -318,11 +345,13 @@
                 deleteTodo(index) {
                     this.todos.splice(index, 1);
                     this.recount()
+                    this.saveTodo()
                 },
                 clearThyToDo() {
                     this.todos = []; //empty array
                     this.storeTodo()
                     this.recount()
+                    this.saveTodo()
                 }
             }
         })
