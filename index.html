@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-3">
                         <span class="url-span">
-                            <a :disabled="myItem.length===0" :href="myItem" class="link-dark"
+                            <a type="button" :disabled="myItem.length===0" :href="myItem" class="btn btn-link link-dark"
                                 style="font-size: 18px; font-weight: 700; color:  #000; float: right;" target="_blank">Search To
                                 Do</a>
                         </span>
@@ -72,37 +72,37 @@
                         <input type="text" v-else class="form-control form-control" v-model="todo" placeholder="Edit Your To Do" aria-label=".form-control input2">
                     </div>
                     <div class="col-3">
-                        <button v-if="!isEditing" class="btn btn-outline-light p-2" type="button" @click="storeTodo">Add</button>
-                        <button v-else class="btn btn-outline-dark p-2" type="button" @click="storeTodo">Edit</button>
+                        <button v-if="!isEditing" class="btn btn-outline-light p-2 btn-lg" type="button" @click="storeTodo">Add</button>
+                        <button v-else class="btn btn-outline-dark p-2 btn-lg" type="button" @click="storeTodo">Edit</button>
                     </div>
                 </div>
             </div>
             <div class="container-fluid">
-                <div class="alert alert-warning alert-dismissible fade" role="alert" id="alert-box" style="display: none">
-                    <strong>Opps!</strong> Field is empty or activity exists.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="row">
+                    <div class="alert alert-warning alert-dismissible fade" role="alert" id="alert-box" style="display: none">
+                        <strong>Opps!</strong> Field is empty or activity exists.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 </div>
             </div>
             <div class="container-fluid">
-                <div class="">
-                    <li v-for="(todo, index) in todos" :class="{finished : todo.finished}" style="list-style:none; margin: 10px 0;">
-                        <div class="container-fluid">
-                            <div class="row justify-content-evenly align-items-center" style="display: flex; flex-direction: row; justify-content:space-evenly; align-items: center; width: 100%;">
-                                <div class="col-10 col-md-6" style="width: 50%;">
-                                    {{ firstCharUpper(todo.label) }}
-                                </div>
-                                <div class="col-2 col-md-1 p-2" style="width: 5%; margin: 0 4px;">
-                                    <input type="checkbox" class="form-check-input" @change="recount()">
-                                </div>
-                                <div class="col-6 col-md-2 p-2 mx-md-2" style="width: 12%; margin: 0 4px;">
-                                    <button class="btn btn-default btn-outline-warning" @click="editTodo(index)">Edit</button>
-                                </div>
-                                <div class="col-6 col-md-3 p-2 mx-md-2" style="width: 15%;">
-                                    <button class="btn btn-default btn-danger" @click="deleteTodo(index)">Delete</button>
-                                </div>
+                <div v-for="(todo, index) in todos" :class="{finished : todo.finished}">
+                    <div class="container-fluid">
+                        <div class="row justify-content-evenly align-items-center m-3">
+                            <div class="col-5 col-sm-6" class="toDolabel">
+                                {{ firstCharUpper(todo.label) }}
+                            </div>
+                            <div class="col-1 col-sm-1" class="checkBox">
+                                <input type="checkbox" class="form-check-input" @change="recount()">
+                            </div>
+                            <div class="col-1 col-sm-2" class="editToDo">
+                                <button class="btn btn-default btn-outline-warning" @click="editTodo(index)">Edit</button>
+                            </div>
+                            <div class="col-2 col-sm-3" class="deleteToDo">
+                                <button class="btn btn-default btn-danger" @click="deleteTodo(index)">Delete</button>
                             </div>
                         </div>
-                    </li>
+                    </div>
                 </div>
                 <div class="row justify-content-between align-items-center">
                     <div class="col-md-6">
