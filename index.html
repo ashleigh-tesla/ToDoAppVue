@@ -46,12 +46,20 @@
         <header>ToDoApp</header>
 
         <div id="to-do-url" style="display: flex; justify-content:center; align-items:center; width: 100%;">
-            <input v-model="myItem" type="text" placeholder="paste your to-do url" style="padding: 10px 10px; border-radius: 3px; outline: none; width: 75%; font-size: 17px; height: 100%; border: 1px solid #ccc; margin-right: 5px;">
-            <span style="width: 20%; margin-left: 10px;">
-                <a :disabled="myItem.length===0" :href="myItem" class="link-dark"
-                    style="font-size: 18px; font-weight: 700; color:  #000; float: right;" target="_blank">Search To
-                    Do</a>
-            </span>
+            <div class="container-fluid">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-9">
+                        <input v-model="myItem" class="form-control form-control url-input" type="text" placeholder="paste your to-do url" aria-label=".form-control input">
+                    </div>
+                    <div class="col-3">
+                        <span class="url-span">
+                            <a :disabled="myItem.length===0" :href="myItem" class="link-dark"
+                                style="font-size: 18px; font-weight: 700; color:  #000; float: right;" target="_blank">Search To
+                                Do</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
         <br>
         <hr>
@@ -59,16 +67,13 @@
         <div id="myVueItem">
             <div class="container-fluid">
                 <div class="row justify-content-between align-items-center" id="myVue">
-
-                    <div class="input-group">
-                        <div class="col-10">
-                            <input type="text" v-if="!isEditing" class="form-control form-control-lg" v-model="todo" placeholder="Add Your To Do" aria-label=".form-control-lg example">
-                            <input type="text" v-else class="form-control form-control-lg" v-model="todo" placeholder="Edit Your To Do" aria-label=".form-control example">
-                        </div>
-                        <div class="col-2">
-                            <button v-if="!isEditing" class="btn btn-outline-light" type="button" @click="storeTodo">Add</button>
-                            <button v-else class="btn btn-outline-dark" type="button" @click="storeTodo">Edit</button>
-                        </div>
+                    <div class="col-9">
+                        <input type="text" v-if="!isEditing" class="form-control form-control" v-model="todo" placeholder="Add Your To Do" aria-label=".form-control input1">
+                        <input type="text" v-else class="form-control form-control" v-model="todo" placeholder="Edit Your To Do" aria-label=".form-control input2">
+                    </div>
+                    <div class="col-3">
+                        <button v-if="!isEditing" class="btn btn-outline-light p-2" type="button" @click="storeTodo">Add</button>
+                        <button v-else class="btn btn-outline-dark p-2" type="button" @click="storeTodo">Edit</button>
                     </div>
                 </div>
             </div>
