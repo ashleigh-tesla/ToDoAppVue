@@ -298,15 +298,17 @@
                     inProgress.textContent = ` ${ongoingNumber} `
                 },
                 storeTodo() {
+                    var index = this.todos.findIndex(x => x.label == this.todos.label)
+
                     // ensure they actually typed something
-                    if (this.todo.length === 0 || !this.todo && this.todos.includes(this.todo)) {
+                    if (this.todo.length === 0 || !this.todo && this.todos.includes(this.label) || index !== -1 || ((this.todos.indexOf(this.todos.label) && this.todos.indexOf(this.todos.status)) !== -1)) {
                         $('#alert-box').addClass('show').removeAttr('style')
 
                         // window.location.reload()
 
                         return
                     }
-                    if (this.selectedIndex == null) {
+                    if (this.selectedIndex == null || index === -1 || ((this.todos.indexOf(this.todos.label) && this.todos.indexOf(this.todos.status)) === -1)) {
                         this.todos.push({
                             label: this.todo,
                             status: "to-do",
